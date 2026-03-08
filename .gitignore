@@ -1,0 +1,37 @@
+.DS_Store
+
+# Local overrides and generated files
+*.local
+*.bak
+
+# Bootstrap backups
+backups/
+
+# Tool runtime state
+.claude/
+.codex/
+.cursor/
+
+# Keep the tracked repo content explicit
+!.zprofile
+!.zshenv
+!.zshrc
+!.tmux.conf
+!README.md
+!claude/
+!claude/settings.json
+!codex/
+!codex/config.toml
+!cursor/
+!cursor/mcp.json
+!cursor/README.md
+!references/
+!references/theniceboy-config/
+!scripts/
+!scripts/bootstrap.sh
+!scripts/check.sh
+!tmux/
+!zsh/
+!zsh/env.zsh
+!zsh/aliases.zsh
+!zsh/plugins.zsh
