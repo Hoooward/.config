@@ -32,9 +32,11 @@ Low-friction dotfiles repo for `codex`, `cursor` AI assets, `claude`, `zsh`, and
 
 Keep machine-specific settings out of the repo.
 
-- `~/.zshrc.local`: proxies, absolute paths, local completions
-- `~/.tmux.conf.local`: machine-specific tmux integrations
-- `~/.codex/config.local.toml`: local notes only; merge manually if needed
+- `~/.zshrc`: host stub plus machine-specific shell additions after the `source` line
+- `~/.zprofile`: host stub plus machine-specific login-shell additions if needed
+- `~/.zshenv`: host stub plus machine-specific minimal env additions if needed
+- `~/.tmux.conf`: host stub plus machine-specific tmux additions after the `source-file` line
+- `codex/config.toml`: keep the repo copy shared; do not commit machine-specific trusted-project changes
 
 ## Deployment Model
 
