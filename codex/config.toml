@@ -1,4 +1,0 @@
-model = "gpt-5.4"
-model_reasoning_effort = "medium"
-
-# Keep machine-specific trusted project paths out of the shared repo.

@@ -80,7 +80,6 @@ write_source_stub "$HOME/.zprofile" ".zprofile"
 write_source_stub "$HOME/.zshenv" ".zshenv"
 write_source_stub "$HOME/.tmux.conf" ".tmux.conf"
 link_file "$repo_root/claude/settings.json" "$HOME/.claude/settings.json"
-link_file "$repo_root/codex/config.toml" "$HOME/.codex/config.toml"
 link_file "$repo_root/cursor/mcp.json" "$HOME/.cursor/mcp.json"
 
 if [ "$created_backup_root" -eq 0 ]; then

@@ -20,8 +20,6 @@ backups/
 !README.md
 !claude/
 !claude/settings.json
-!codex/
-!codex/config.toml
 !cursor/
 !cursor/mcp.json
 !cursor/README.md

@@ -60,7 +60,6 @@ check_source_stub "$HOME/.zprofile" ".zprofile"
 check_source_stub "$HOME/.zshenv" ".zshenv"
 check_source_stub "$HOME/.tmux.conf" ".tmux.conf"
 check_link "$repo_root/claude/settings.json" "$HOME/.claude/settings.json"
-check_link "$repo_root/codex/config.toml" "$HOME/.codex/config.toml"
 check_link "$repo_root/cursor/mcp.json" "$HOME/.cursor/mcp.json"
 
 exit "$status"
