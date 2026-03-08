@@ -4,6 +4,7 @@ set -euo pipefail
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 status=0
+zshrc_marker="# Managed by hzht-config. Re-run bootstrap if repo path changes."
 
 check_link() {
   local source_path="$1"
@@ -28,6 +29,24 @@ check_link() {
   status=1
 }
 
+check_zshrc_stub() {
+  local target_path="$HOME/.zshrc"
+
+  if [ ! -f "$target_path" ] || [ -L "$target_path" ]; then
+    printf 'DIFF %s\n' "$target_path"
+    status=1
+    return
+  fi
+
+  if grep -Fq "$zshrc_marker" "$target_path" && grep -Fq "HZHT_CONFIG_ROOT=\"$repo_root\"" "$target_path" && grep -Fq 'source "$HZHT_CONFIG_ROOT/.zshrc"' "$target_path"; then
+    printf 'OK %s\n' "$target_path"
+    return
+  fi
+
+  printf 'DIFF %s\n' "$target_path"
+  status=1
+}
+
 if [ -d "$repo_root/references/theniceboy-config" ]; then
   printf 'OK %s\n' "$repo_root/references/theniceboy-config"
 else
@@ -35,7 +54,7 @@ else
   status=1
 fi
 
-check_link "$repo_root/.zshrc" "$HOME/.zshrc"
+check_zshrc_stub
 check_link "$repo_root/.zprofile" "$HOME/.zprofile"
 check_link "$repo_root/.zshenv" "$HOME/.zshenv"
 check_link "$repo_root/.tmux.conf" "$HOME/.tmux.conf"

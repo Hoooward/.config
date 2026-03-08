@@ -5,6 +5,7 @@ set -euo pipefail
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 backup_root="${HOME}/.hzht-config-backups/$(date +%Y%m%d-%H%M%S)"
 created_backup_root=0
+zshrc_marker="# Managed by hzht-config. Re-run bootstrap if repo path changes."
 
 backup_target() {
   local target="$1"
@@ -44,7 +45,36 @@ link_file() {
   printf 'Linked %s -> %s\n' "$target_path" "$source_path"
 }
 
-link_file "$repo_root/.zshrc" "$HOME/.zshrc"
+write_zshrc_stub() {
+  local target_path="$HOME/.zshrc"
+  local desired_content
+  desired_content="$(cat <<EOF
+$zshrc_marker
+HZHT_CONFIG_ROOT="$repo_root"
+source "\$HZHT_CONFIG_ROOT/.zshrc"
+EOF
+)"
+
+  mkdir -p "$(dirname "$target_path")"
+
+  if [ -f "$target_path" ] && [ ! -L "$target_path" ]; then
+    local current_content
+    current_content="$(cat "$target_path")"
+    if [ "$current_content" = "$desired_content" ]; then
+      printf 'OK %s\n' "$target_path"
+      return
+    fi
+  fi
+
+  if [ -e "$target_path" ] || [ -L "$target_path" ]; then
+    backup_target "$target_path"
+  fi
+
+  printf '%s\n' "$desired_content" >"$target_path"
+  printf 'Wrote %s\n' "$target_path"
+}
+
+write_zshrc_stub
 link_file "$repo_root/.zprofile" "$HOME/.zprofile"
 link_file "$repo_root/.zshenv" "$HOME/.zshenv"
 link_file "$repo_root/.tmux.conf" "$HOME/.tmux.conf"
