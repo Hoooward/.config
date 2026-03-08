@@ -19,6 +19,49 @@ Low-friction dotfiles repo for `agents` skills, `codex`, `cursor` AI assets, `cl
 ./scripts/check.sh
 ```
 
+## New Device Setup
+
+1. Clone this repo and run:
+
+```bash
+./scripts/bootstrap.sh
+./scripts/check.sh
+```
+
+2. Install the local prerequisites that this repo assumes:
+   - Node.js `v20.19+` with `npx` available
+   - Chrome stable or newer if you want to use the `chrome-devtools` MCP server
+   - Codex CLI if you use Codex from the terminal
+
+3. Understand when `npx skills` is needed:
+   - The shared skills in this repo are stored under `agents/skills/` and become `~/.agents/skills` after `bootstrap.sh`.
+   - For the already-backed-up shared skills to exist on a new device, you do not need to separately install the `skills` package globally.
+   - You do need `npx skills` when you want to import new third-party skill packages, update them, remove them, or create compatibility installs for other agents.
+
+4. Useful `skills` commands:
+
+```bash
+# Install a public skill package globally
+npx skills add -g vercel-labs/agent-skills
+
+# Install from a git URL
+npx skills add -g git@github.com:kepano/obsidian-skills.git
+
+# List global skills
+npx skills list -g
+
+# Remove a skill
+npx skills remove <skill-name> -g -y
+```
+
+5. Verify the tracked Chrome DevTools MCP entry in Codex:
+
+```bash
+codex mcp list
+```
+
+The shared Codex config in this repo already contains a `chrome-devtools` MCP entry, so on a new device you usually only need the local prerequisites above.
+
 ## Managed Paths
 
 - `~/.zshrc` (host stub that sources the repo copy)
@@ -60,3 +103,16 @@ Cursor desktop settings and keybindings are intentionally excluded because Curso
 - Do not put `[projects."/absolute/path"]` trust rules in `codex/config.toml` if you want that file to remain portable between machines.
 - Cursor editor settings live in `~/Library/Application Support/Cursor/User/` on this macOS setup, but this repo does not manage them.
 - `references/theniceboy-config/` is for comparison and selective copying only; it is not deployed by `bootstrap.sh`.
+
+## Official Links
+
+- Open agent skills CLI:
+  - GitHub: https://github.com/vercel-labs/skills
+  - Overview: https://vercel.com/changelog/introducing-skills-the-open-agent-skills-ecosystem
+  - Guide: https://vercel.com/kb/guide/agent-skills-creating-installing-and-sharing-reusable-agent-context
+- Chrome DevTools MCP:
+  - GitHub: https://github.com/mcp/chromedevtools/chrome-devtools-mcp
+  - Chrome for Developers overview: https://developer.chrome.com/blog/chrome-devtools-mcp
+- Codex:
+  - Product page: https://openai.com/codex
+  - MCP docs: https://platform.openai.com/docs/docs-mcp
