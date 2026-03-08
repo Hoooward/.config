@@ -26,7 +26,7 @@ Low-friction dotfiles repo for `codex`, `cursor` AI assets, `claude`, `zsh`, and
 - `~/.tmux.conf` (host stub that sources the repo copy)
 - `~/.claude/settings.json`
 - `~/.cursor/mcp.json`
-- `~/.codex` (symlinked to `codex/`, with only selected files tracked in Git)
+- `~/.codex` (symlinked to `codex/`, with only selected files tracked by the root `.gitignore`)
 
 ## Local Overrides
 
@@ -42,7 +42,7 @@ Keep machine-specific settings out of the repo.
 
 - `zsh` and `tmux`: local host entry files stay normal files and only `source` the repo entrypoint, similar to the reference repo
 - `claude` and `cursor/mcp.json`: managed via symlink
-- `codex`: managed as a directory symlink like the reference repo, but `codex/.gitignore` keeps Git focused on `skills/`
+- `codex`: managed as a directory symlink like the reference repo, while the root `.gitignore` keeps Git focused on `skills/`
 - If the repo path changes, rerun `./scripts/bootstrap.sh` to rewrite the local stub files
 
 Cursor desktop settings and keybindings are intentionally excluded because Cursor already syncs them.
@@ -51,7 +51,7 @@ Cursor desktop settings and keybindings are intentionally excluded because Curso
 
 - Git uses an allowlist-style `.gitignore`: ignore everything by default, then explicitly unignore only the repo-owned files and directories.
 - This repo intentionally does not sync auth, sessions, history, sqlite, caches, or extensions.
-- `~/.codex/config.toml` and other Codex runtime files can exist in the symlinked repo working tree, but they stay untracked via `codex/.gitignore`.
+- `~/.codex/config.toml` and other Codex runtime files can exist in the symlinked repo working tree, but they stay untracked via the root `.gitignore`.
 - Do not put `[projects."/absolute/path"]` trust rules in `codex/config.toml` if you want that file to remain portable between machines.
 - Cursor editor settings live in `~/Library/Application Support/Cursor/User/` on this macOS setup, but this repo does not manage them.
 - `references/theniceboy-config/` is for comparison and selective copying only; it is not deployed by `bootstrap.sh`.

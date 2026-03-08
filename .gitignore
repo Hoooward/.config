@@ -37,8 +37,8 @@
 /codex/*
 !/codex/skills/
 !/codex/skills/**
-/codex/skills/.system
-!/codex/.gitignore
+/codex/skills/.system/
+/codex/skills/.system/**
 
 # Scripts.
 !/scripts/
