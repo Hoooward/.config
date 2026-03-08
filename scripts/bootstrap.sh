@@ -104,6 +104,7 @@ write_source_stub "$HOME/.zshenv" ".zshenv"
 write_source_stub "$HOME/.tmux.conf" ".tmux.conf"
 link_file "$repo_root/claude/settings.json" "$HOME/.claude/settings.json"
 link_file "$repo_root/cursor/mcp.json" "$HOME/.cursor/mcp.json"
+adopt_and_link_dir "$repo_root/agents" "$HOME/.agents"
 adopt_and_link_dir "$repo_root/codex" "$HOME/.codex"
 
 if [ "$created_backup_root" -eq 0 ]; then

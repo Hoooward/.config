@@ -33,12 +33,14 @@
 !/cursor/mcp.json
 !/cursor/README.md
 
+!/agents/
+/agents/*
+!/agents/.skill-lock.json
+!/agents/skills/
+!/agents/skills/**
+
 !/codex/
 /codex/*
-!/codex/skills/
-!/codex/skills/**
-/codex/skills/.system/
-/codex/skills/.system/**
 !/codex/config.toml
 
 # Scripts.
