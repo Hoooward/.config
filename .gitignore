@@ -1,38 +1,56 @@
-.DS_Store
+# Ignore everything by default. Explicitly allow only the files we want
+# to keep under version control, similar to the reference repo.
+/*
+/**/
 
-# Local overrides and generated files
-*.local
-*.bak
+# Root-level tracked files.
+!/.gitignore
+!/.tmux.conf
+!/.zprofile
+!/.zshenv
+!/.zshrc
+!/README.md
 
-# Bootstrap backups
-backups/
+# Shared shell fragments.
+!/zsh/
+/zsh/*
+!/zsh/env.zsh
+!/zsh/aliases.zsh
+!/zsh/plugins.zsh
 
-# Tool runtime state
-.claude/
-.codex/
-.cursor/
+# Placeholder directory for future tmux fragments.
+!/tmux/
+/tmux/*
+!/tmux/.gitkeep
 
-# Keep the tracked repo content explicit
-!.zprofile
-!.zshenv
-!.zshrc
-!.tmux.conf
-!README.md
-!claude/
-!claude/settings.json
-!codex/
-!codex/skills/
-!codex/skills/**
-!cursor/
-!cursor/mcp.json
-!cursor/README.md
-!references/
-!references/theniceboy-config/
-!scripts/
-!scripts/bootstrap.sh
-!scripts/check.sh
-!tmux/
-!zsh/
-!zsh/env.zsh
-!zsh/aliases.zsh
-!zsh/plugins.zsh
+# Managed app config.
+!/claude/
+/claude/*
+!/claude/settings.json
+
+!/cursor/
+/cursor/*
+!/cursor/mcp.json
+!/cursor/README.md
+
+!/codex/
+/codex/*
+!/codex/skills/
+!/codex/skills/**
+/codex/skills/.system
+!/codex/.gitignore
+
+# Scripts.
+!/scripts/
+/scripts/*
+!/scripts/bootstrap.sh
+!/scripts/check.sh
+
+# Read-only reference repo.
+!/references/
+!/references/theniceboy-config/
+!/references/theniceboy-config/**
+
+# Generic junk inside allowed paths.
+**/.DS_Store
+**/*.bak

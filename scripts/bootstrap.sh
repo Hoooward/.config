@@ -45,6 +45,29 @@ link_file() {
   printf 'Linked %s -> %s\n' "$target_path" "$source_path"
 }
 
+adopt_and_link_dir() {
+  local source_dir="$1"
+  local target_dir="$2"
+
+  mkdir -p "$source_dir"
+  mkdir -p "$(dirname "$target_dir")"
+
+  if [ -L "$target_dir" ] && [ "$(readlink "$target_dir")" = "$source_dir" ]; then
+    printf 'OK %s\n' "$target_dir"
+    return
+  fi
+
+  if [ -d "$target_dir" ] && [ ! -L "$target_dir" ]; then
+    rsync -a --ignore-existing "$target_dir"/ "$source_dir"/
+    backup_target "$target_dir"
+  elif [ -e "$target_dir" ] || [ -L "$target_dir" ]; then
+    backup_target "$target_dir"
+  fi
+
+  ln -s "$source_dir" "$target_dir"
+  printf 'Linked %s -> %s\n' "$target_dir" "$source_dir"
+}
+
 write_source_stub() {
   local target_path="$1"
   local repo_file="$2"
@@ -81,6 +104,7 @@ write_source_stub "$HOME/.zshenv" ".zshenv"
 write_source_stub "$HOME/.tmux.conf" ".tmux.conf"
 link_file "$repo_root/claude/settings.json" "$HOME/.claude/settings.json"
 link_file "$repo_root/cursor/mcp.json" "$HOME/.cursor/mcp.json"
+adopt_and_link_dir "$repo_root/codex" "$HOME/.codex"
 
 if [ "$created_backup_root" -eq 0 ]; then
   printf 'No backups created.\n'

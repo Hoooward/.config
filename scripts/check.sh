@@ -29,6 +29,25 @@ check_link() {
   status=1
 }
 
+check_dir_link() {
+  local source_dir="$1"
+  local target_dir="$2"
+
+  if [ ! -d "$source_dir" ]; then
+    printf 'MISSING SOURCE %s\n' "$source_dir"
+    status=1
+    return
+  fi
+
+  if [ -L "$target_dir" ] && [ "$(readlink "$target_dir")" = "$source_dir" ]; then
+    printf 'OK %s\n' "$target_dir"
+    return
+  fi
+
+  printf 'DIFF %s\n' "$target_dir"
+  status=1
+}
+
 check_source_stub() {
   local target_path="$1"
   local repo_file="$2"
@@ -61,5 +80,6 @@ check_source_stub "$HOME/.zshenv" ".zshenv"
 check_source_stub "$HOME/.tmux.conf" ".tmux.conf"
 check_link "$repo_root/claude/settings.json" "$HOME/.claude/settings.json"
 check_link "$repo_root/cursor/mcp.json" "$HOME/.cursor/mcp.json"
+check_dir_link "$repo_root/codex" "$HOME/.codex"
 
 exit "$status"
