@@ -39,6 +39,7 @@
 !/codex/skills/**
 /codex/skills/.system/
 /codex/skills/.system/**
+!/codex/config.toml
 
 # Scripts.
 !/scripts/
