@@ -21,9 +21,9 @@ Low-friction dotfiles repo for `codex`, `cursor` AI assets, `claude`, `zsh`, and
 ## Managed Paths
 
 - `~/.zshrc` (host stub that sources the repo copy)
-- `~/.zprofile`
-- `~/.zshenv`
-- `~/.tmux.conf`
+- `~/.zprofile` (host stub that sources the repo copy)
+- `~/.zshenv` (host stub that sources the repo copy)
+- `~/.tmux.conf` (host stub that sources the repo copy)
 - `~/.claude/settings.json`
 - `~/.codex/config.toml`
 - `~/.cursor/mcp.json`
@@ -38,9 +38,9 @@ Keep machine-specific settings out of the repo.
 
 ## Deployment Model
 
-- `zsh`: local `~/.zshrc` stays a normal file and only `source`s the repo entrypoint, similar to the reference repo
-- `tmux`, `claude`, `codex`, `cursor/mcp.json`: managed via symlink
-- If the repo path changes, rerun `./scripts/bootstrap.sh` to rewrite the local `~/.zshrc` stub
+- `zsh` and `tmux`: local host entry files stay normal files and only `source` the repo entrypoint, similar to the reference repo
+- `claude`, `codex`, `cursor/mcp.json`: managed via symlink
+- If the repo path changes, rerun `./scripts/bootstrap.sh` to rewrite the local stub files
 
 Cursor desktop settings and keybindings are intentionally excluded because Cursor already syncs them.
 

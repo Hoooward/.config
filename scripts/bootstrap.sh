@@ -5,7 +5,7 @@ set -euo pipefail
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 backup_root="${HOME}/.hzht-config-backups/$(date +%Y%m%d-%H%M%S)"
 created_backup_root=0
-zshrc_marker="# Managed by hzht-config. Re-run bootstrap if repo path changes."
+stub_marker="# Managed by hzht-config. Re-run bootstrap if repo path changes."
 
 backup_target() {
   local target="$1"
@@ -45,13 +45,14 @@ link_file() {
   printf 'Linked %s -> %s\n' "$target_path" "$source_path"
 }
 
-write_zshrc_stub() {
-  local target_path="$HOME/.zshrc"
+write_source_stub() {
+  local target_path="$1"
+  local repo_file="$2"
   local desired_content
   desired_content="$(cat <<EOF
-$zshrc_marker
+$stub_marker
 HZHT_CONFIG_ROOT="$repo_root"
-source "\$HZHT_CONFIG_ROOT/.zshrc"
+source "\$HZHT_CONFIG_ROOT/$repo_file"
 EOF
 )"
 
@@ -74,10 +75,10 @@ EOF
   printf 'Wrote %s\n' "$target_path"
 }
 
-write_zshrc_stub
-link_file "$repo_root/.zprofile" "$HOME/.zprofile"
-link_file "$repo_root/.zshenv" "$HOME/.zshenv"
-link_file "$repo_root/.tmux.conf" "$HOME/.tmux.conf"
+write_source_stub "$HOME/.zshrc" ".zshrc"
+write_source_stub "$HOME/.zprofile" ".zprofile"
+write_source_stub "$HOME/.zshenv" ".zshenv"
+write_source_stub "$HOME/.tmux.conf" ".tmux.conf"
 link_file "$repo_root/claude/settings.json" "$HOME/.claude/settings.json"
 link_file "$repo_root/codex/config.toml" "$HOME/.codex/config.toml"
 link_file "$repo_root/cursor/mcp.json" "$HOME/.cursor/mcp.json"
