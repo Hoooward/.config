@@ -20,6 +20,9 @@ backups/
 !README.md
 !claude/
 !claude/settings.json
+!codex/
+!codex/skills/
+!codex/skills/**
 !cursor/
 !cursor/mcp.json
 !cursor/README.md
