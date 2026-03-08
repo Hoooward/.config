@@ -1,10 +1,13 @@
 model = "gpt-5.4"
 model_reasoning_effort = "medium"
-# 参考 references 的做法，直接提升 Codex 的全局运行权限，
-# 这样配置可以跨设备同步，不依赖本机绝对路径。
-approval_policy = "never"
-sandbox_mode = "danger-full-access"
+
+# approval_policy = "never"
+# sandbox_mode = "danger-full-access"
+# 单条任务最长 15 分钟
 exec_timeout_ms = 900000
+
+[projects."/Users/tychooo/Documents/Code/hzht/hzht-config"]
+trust_level = "trusted"
 
 # 不在共享配置里写 projects."/Users/..." 这类 trust_level，
 # 因为不同机器上的用户名和目录路径不稳定。
