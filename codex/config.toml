@@ -9,8 +9,16 @@ exec_timeout_ms = 900000
 [projects."/Users/tychooo/Documents/Code/hzht/hzht-config"]
 trust_level = "trusted"
 
+[projects."/Users/tychooo"]
+trust_level = "trusted"
+
 # 不在共享配置里写 projects."/Users/..." 这类 trust_level，
 # 因为不同机器上的用户名和目录路径不稳定。
 [mcp_servers.chrome-devtools]
 command = "npx"
 args = ["chrome-devtools-mcp@latest"]
+
+[mcp_servers.context7]
+args = ["-y", "@upstash/context7-mcp", "--api-key", "ctx7sk-6648fedc-ddf3-4a83-9879-6aa3ffeb7eaf"]
+command = "npx"
+startup_timeout_ms = 20_000
