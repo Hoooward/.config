@@ -3,9 +3,19 @@
 set -euo pipefail
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+deploy_root="${HZHT_CONFIG_DEPLOY_ROOT:-$HOME/.config/hzht-config}"
+active_root="$repo_root"
 backup_root="${HOME}/.hzht-config-backups/$(date +%Y%m%d-%H%M%S)"
 created_backup_root=0
 stub_marker="# Managed by hzht-config. Re-run bootstrap if repo path changes."
+
+sync_repo_to_deploy_root() {
+  mkdir -p "$(dirname "$deploy_root")"
+  mkdir -p "$deploy_root"
+  rsync -a --delete --exclude '.git/' "$repo_root"/ "$deploy_root"/
+  active_root="$deploy_root"
+  printf 'Synced repo to %s\n' "$deploy_root"
+}
 
 backup_target() {
   local target="$1"
@@ -74,7 +84,7 @@ write_source_stub() {
   local desired_content
   desired_content="$(cat <<EOF
 $stub_marker
-HZHT_CONFIG_ROOT="$repo_root"
+HZHT_CONFIG_ROOT="$active_root"
 source "\$HZHT_CONFIG_ROOT/$repo_file"
 EOF
 )"
@@ -98,14 +108,18 @@ EOF
   printf 'Wrote %s\n' "$target_path"
 }
 
+if [ "$repo_root" != "$deploy_root" ]; then
+  sync_repo_to_deploy_root
+fi
+
 write_source_stub "$HOME/.zshrc" ".zshrc"
 write_source_stub "$HOME/.zprofile" ".zprofile"
 write_source_stub "$HOME/.zshenv" ".zshenv"
 write_source_stub "$HOME/.tmux.conf" ".tmux.conf"
-link_file "$repo_root/claude/settings.json" "$HOME/.claude/settings.json"
-link_file "$repo_root/cursor/mcp.json" "$HOME/.cursor/mcp.json"
-adopt_and_link_dir "$repo_root/agents" "$HOME/.agents"
-adopt_and_link_dir "$repo_root/codex" "$HOME/.codex"
+link_file "$active_root/claude/settings.json" "$HOME/.claude/settings.json"
+link_file "$active_root/cursor/mcp.json" "$HOME/.cursor/mcp.json"
+adopt_and_link_dir "$active_root/agents" "$HOME/.agents"
+adopt_and_link_dir "$active_root/codex" "$HOME/.codex"
 
 if [ "$created_backup_root" -eq 0 ]; then
   printf 'No backups created.\n'
