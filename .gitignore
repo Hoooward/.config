@@ -33,6 +33,10 @@
 !/cursor/mcp.json
 !/cursor/README.md
 
+!/ghostty/
+/ghostty/*
+!/ghostty/config
+
 !/agents/
 /agents/*
 !/agents/.skill-lock.json

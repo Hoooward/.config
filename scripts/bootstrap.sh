@@ -118,6 +118,7 @@ write_source_stub "$HOME/.zshenv" ".zshenv"
 write_source_stub "$HOME/.tmux.conf" ".tmux.conf"
 link_file "$active_root/claude/settings.json" "$HOME/.claude/settings.json"
 link_file "$active_root/cursor/mcp.json" "$HOME/.cursor/mcp.json"
+link_file "$active_root/ghostty/config" "$HOME/.config/ghostty/config"
 adopt_and_link_dir "$active_root/agents" "$HOME/.agents"
 adopt_and_link_dir "$active_root/codex" "$HOME/.codex"
 

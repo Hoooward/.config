@@ -80,6 +80,7 @@ check_source_stub "$HOME/.zshenv" ".zshenv"
 check_source_stub "$HOME/.tmux.conf" ".tmux.conf"
 check_link "$repo_root/claude/settings.json" "$HOME/.claude/settings.json"
 check_link "$repo_root/cursor/mcp.json" "$HOME/.cursor/mcp.json"
+check_link "$repo_root/ghostty/config" "$HOME/.config/ghostty/config"
 check_dir_link "$repo_root/agents" "$HOME/.agents"
 check_dir_link "$repo_root/codex" "$HOME/.codex"
 

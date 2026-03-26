@@ -1,13 +1,13 @@
 # hzht-config
 
-Low-friction dotfiles repo for `agents` skills, `codex`, `cursor` AI assets, `claude`, `zsh`, and `tmux`.
+Low-friction dotfiles repo for `agents` skills, `codex`, `cursor` AI assets, `claude`, `ghostty`, `zsh`, and `tmux`.
 
 ## Structure
 
 - `references/theniceboy-config/`: read-only reference clone of `theniceboy/.config`
 - `zsh/`: shared zsh fragments
 - `agents/`: shared universal skills source of truth
-- `claude/`, `codex/`, `cursor/`: tracked app config and AI assets
+- `claude/`, `codex/`, `cursor/`, `ghostty/`: tracked app config and AI assets
 - `.zshrc`, `.zprofile`, `.zshenv`, `.tmux.conf`: host entry files
 - `scripts/bootstrap.sh`: backup existing files and create symlinks
 - `scripts/check.sh`: verify expected symlinks
@@ -70,6 +70,7 @@ The shared Codex config in this repo already contains a `chrome-devtools` MCP en
 - `~/.tmux.conf` (host stub that sources the repo copy)
 - `~/.claude/settings.json`
 - `~/.cursor/mcp.json`
+- `~/.config/ghostty/config`
 - `~/.agents` (symlinked to `agents/`, as the universal skills source)
 - `~/.codex` (symlinked to `codex/`, with `config.toml` tracked and runtime state ignored)
 
@@ -87,7 +88,7 @@ Keep machine-specific settings out of the repo.
 ## Deployment Model
 
 - `zsh` and `tmux`: local host entry files stay normal files and only `source` the repo entrypoint, similar to the reference repo
-- `claude` and `cursor/mcp.json`: managed via symlink
+- `claude`, `cursor/mcp.json`, and `ghostty/config`: managed via symlink
 - `agents`: managed as a directory symlink and stores the universal skills source of truth
 - `codex`: managed as a directory symlink for shared config plus local runtime state, but skills no longer live here
 - If the repo path changes, rerun `./scripts/bootstrap.sh` to rewrite the local stub files
