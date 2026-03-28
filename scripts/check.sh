@@ -3,9 +3,11 @@
 set -euo pipefail
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-status=0
-stub_marker="# Managed by hzht-config. Re-run bootstrap if repo path changes."
+source "$repo_root/scripts/lib/managed_block.sh"
 
+status=0
+
+# 单文件 symlink 校验：检查宿主路径是否指回仓库文件。
 check_link() {
   local source_path="$1"
   local target_path="$2"
@@ -29,6 +31,8 @@ check_link() {
   status=1
 }
 
+# 仓库接管目录校验：这里只验证“是否已经切到仓库目录”，
+# 不再重复检查 adopt 之前的迁移过程。
 check_dir_link() {
   local source_dir="$1"
   local target_dir="$2"
@@ -48,9 +52,10 @@ check_dir_link() {
   status=1
 }
 
-check_source_stub() {
+# 入口文件托管块校验：宿主文件必须存在，并且受控 block 内容要精确匹配。
+check_managed_block() {
   local target_path="$1"
-  local repo_file="$2"
+  local block_body="$2"
 
   if [ ! -f "$target_path" ] || [ -L "$target_path" ]; then
     printf 'DIFF %s\n' "$target_path"
@@ -58,13 +63,41 @@ check_source_stub() {
     return
   fi
 
-  if grep -Fq "$stub_marker" "$target_path" && grep -Fq "HZHT_CONFIG_ROOT=\"$repo_root\"" "$target_path" && grep -Fq "source \"\$HZHT_CONFIG_ROOT/$repo_file\"" "$target_path"; then
+  if managed_block_matches "$target_path" "$block_body"; then
     printf 'OK %s\n' "$target_path"
     return
   fi
 
   printf 'DIFF %s\n' "$target_path"
   status=1
+}
+
+# 和 bootstrap 保持同样的 body 生成规则，避免“写入逻辑”和“校验逻辑”分叉。
+build_shell_source_block_body() {
+  local repo_file="$1"
+
+  printf 'HZHT_CONFIG_ROOT="%s"\n' "$repo_root"
+  printf 'source "$HZHT_CONFIG_ROOT/%s"' "$repo_file"
+}
+
+build_tmux_source_block_body() {
+  local repo_file="$1"
+
+  printf 'source-file "%s/%s"' "$repo_root" "$repo_file"
+}
+
+check_shell_source_block() {
+  local target_path="$1"
+  local repo_file="$2"
+
+  check_managed_block "$target_path" "$(build_shell_source_block_body "$repo_file")"
+}
+
+check_tmux_source_block() {
+  local target_path="$1"
+  local repo_file="$2"
+
+  check_managed_block "$target_path" "$(build_tmux_source_block_body "$repo_file")"
 }
 
 if [ -d "$repo_root/references/theniceboy-config" ]; then
@@ -74,13 +107,18 @@ else
   status=1
 fi
 
-check_source_stub "$HOME/.zshrc" ".zshrc"
-check_source_stub "$HOME/.zprofile" ".zprofile"
-check_source_stub "$HOME/.zshenv" ".zshenv"
-check_source_stub "$HOME/.tmux.conf" ".tmux.conf"
-check_link "$repo_root/claude/settings.json" "$HOME/.claude/settings.json"
+# 1. 入口文件：校验 managed block。
+check_shell_source_block "$HOME/.zshrc" ".zshrc"
+check_shell_source_block "$HOME/.zprofile" ".zprofile"
+check_shell_source_block "$HOME/.zshenv" ".zshenv"
+check_tmux_source_block "$HOME/.tmux.conf" ".tmux.conf"
+
+# 2. 单文件：校验 symlink。
 check_link "$repo_root/cursor/mcp.json" "$HOME/.cursor/mcp.json"
+
+# 3. 仓库接管目录：校验 symlink。
 check_dir_link "$repo_root/agents" "$HOME/.agents"
 check_dir_link "$repo_root/codex" "$HOME/.codex"
+check_dir_link "$repo_root/claude" "$HOME/.claude"
 
 exit "$status"

@@ -52,6 +52,11 @@
 /scripts/*
 !/scripts/bootstrap.sh
 !/scripts/check.sh
+!/scripts/test_managed_block.sh
+!/scripts/lib
+/scripts/lib/*
+!/scripts/lib/managed_block.sh
+!/scripts/lib/bootstrap_common.sh
 
 # Read-only reference repo.
 !/references/

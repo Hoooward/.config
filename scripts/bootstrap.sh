@@ -3,10 +3,12 @@
 set -euo pipefail
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+source "$repo_root/scripts/lib/managed_block.sh"
+
 backup_root="${HOME}/.hzht-config-backups/$(date +%Y%m%d-%H%M%S)"
 created_backup_root=0
-stub_marker="# Managed by hzht-config. Re-run bootstrap if repo path changes."
 
+# 通用备份：凡是要改写宿主路径，先统一走这里，避免各个同步类型各自实现一套备份逻辑。
 backup_target() {
   local target="$1"
 
@@ -26,6 +28,7 @@ backup_target() {
   printf 'Backed up %s -> %s\n' "$target" "$destination"
 }
 
+# 单文件同步：宿主路径最终应该是一个指向仓库文件的 symlink。
 link_file() {
   local source_path="$1"
   local target_path="$2"
@@ -45,6 +48,9 @@ link_file() {
   printf 'Linked %s -> %s\n' "$target_path" "$source_path"
 }
 
+# 目录接管同步：
+# 1. 如果宿主已有真实目录，先把内容并入仓库目录。
+# 2. 再把宿主路径切成指向仓库目录的 symlink。
 adopt_and_link_dir() {
   local source_dir="$1"
   local target_dir="$2"
@@ -68,42 +74,74 @@ adopt_and_link_dir() {
   printf 'Linked %s -> %s\n' "$target_dir" "$source_dir"
 }
 
-write_source_stub() {
+# 入口文件托管块同步：
+# 宿主文件保留为普通文件，只在其中维护一个受控 block，
+# block 内负责 source 仓库里的真正入口文件。
+ensure_managed_block_file() {
   local target_path="$1"
-  local repo_file="$2"
-  local desired_content
-  desired_content="$(cat <<EOF
-$stub_marker
-HZHT_CONFIG_ROOT="$repo_root"
-source "\$HZHT_CONFIG_ROOT/$repo_file"
-EOF
-)"
+  local block_body="$2"
 
   mkdir -p "$(dirname "$target_path")"
 
-  if [ -f "$target_path" ] && [ ! -L "$target_path" ]; then
-    local current_content
-    current_content="$(cat "$target_path")"
-    if [ "$current_content" = "$desired_content" ]; then
-      printf 'OK %s\n' "$target_path"
-      return
-    fi
-  fi
-
-  if [ -e "$target_path" ] || [ -L "$target_path" ]; then
+  if [ -L "$target_path" ]; then
+    backup_target "$target_path"
+  elif [ -e "$target_path" ] && [ ! -f "$target_path" ]; then
     backup_target "$target_path"
   fi
 
-  printf '%s\n' "$desired_content" >"$target_path"
-  printf 'Wrote %s\n' "$target_path"
+  if managed_block_matches "$target_path" "$block_body"; then
+    printf 'OK %s\n' "$target_path"
+    return
+  fi
+
+  upsert_managed_block "$target_path" "$block_body"
+  printf 'Updated %s\n' "$target_path"
 }
 
-write_source_stub "$HOME/.zshrc" ".zshrc"
-write_source_stub "$HOME/.zprofile" ".zprofile"
-write_source_stub "$HOME/.zshenv" ".zshenv"
-write_source_stub "$HOME/.tmux.conf" ".tmux.conf"
-link_file "$repo_root/claude/settings.json" "$HOME/.claude/settings.json"
+# shell 类入口文件统一走这一套 block body：
+# 先记录 repo_root，再 source 仓库里的目标文件。
+build_shell_source_block_body() {
+  local repo_file="$1"
+
+  printf 'HZHT_CONFIG_ROOT="%s"\n' "$repo_root"
+  printf 'source "$HZHT_CONFIG_ROOT/%s"' "$repo_file"
+}
+
+# tmux 不是 shell 语法，所以单独生成 source-file 形式的 body。
+build_tmux_source_block_body() {
+  local repo_file="$1"
+
+  printf 'source-file "%s/%s"' "$repo_root" "$repo_file"
+}
+
+# 下面开始声明“这个仓库真正会同步什么”。
+# 这里不用 spec 字符串表，是因为当前真正重要的是三种同步语义，
+# 直接按 helper 调用会比额外包装一层 DSL 更清楚。
+ensure_shell_source_block() {
+  local target_path="$1"
+  local repo_file="$2"
+
+  ensure_managed_block_file "$target_path" "$(build_shell_source_block_body "$repo_file")"
+}
+
+ensure_tmux_source_block() {
+  local target_path="$1"
+  local repo_file="$2"
+
+  ensure_managed_block_file "$target_path" "$(build_tmux_source_block_body "$repo_file")"
+}
+
+# 1. 入口文件：宿主保留，写入 managed block。
+ensure_shell_source_block "$HOME/.zshrc" ".zshrc"
+ensure_shell_source_block "$HOME/.zprofile" ".zprofile"
+ensure_shell_source_block "$HOME/.zshenv" ".zshenv"
+ensure_tmux_source_block "$HOME/.tmux.conf" ".tmux.conf"
+
+# 2. 单文件：直接 symlink 到仓库文件。
+# link_file "$repo_root/claude/settings.json" "$HOME/.claude/settings.json"
 link_file "$repo_root/cursor/mcp.json" "$HOME/.cursor/mcp.json"
+
+# 3. 目录：先 adopt 宿主已有内容，再 symlink 到仓库目录。
 adopt_and_link_dir "$repo_root/agents" "$HOME/.agents"
 adopt_and_link_dir "$repo_root/codex" "$HOME/.codex"
 adopt_and_link_dir "$repo_root/claude" "$HOME/.claude"
