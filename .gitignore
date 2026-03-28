@@ -43,6 +43,7 @@
 /codex/*
 !/codex/config.toml
 !/codex/skills
+/codex/skills/skills/.system
 !/codex/skills/**
 /codex/skills/.system
 
