@@ -5,8 +5,12 @@
 # 机器专属的 zsh 内容现在直接写在宿主 ~/.zshrc 里，不再额外拆单独的本地覆盖文件。
 HZHT_CONFIG_ROOT="${${(%):-%N}:A:h}"
 
+export PATH="$HOME/.local/bin:$PATH"
+
 source "$HZHT_CONFIG_ROOT/zsh/env.zsh"
 source "$HZHT_CONFIG_ROOT/zsh/aliases.zsh"
 source "$HZHT_CONFIG_ROOT/zsh/plugins.zsh"
+source "$HZHT_CONFIG_ROOT/zsh/fzf.zsh"
 
-export PATH="$HOME/.local/bin:$PATH"
+eval "$(starship init zsh)"
+

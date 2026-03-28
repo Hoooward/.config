@@ -140,6 +140,7 @@ ensure_tmux_source_block "$HOME/.tmux.conf" ".tmux.conf"
 # 2. 单文件：直接 symlink 到仓库文件。
 # link_file "$repo_root/claude/settings.json" "$HOME/.claude/settings.json"
 link_file "$repo_root/cursor/mcp.json" "$HOME/.cursor/mcp.json"
+link_file "$repo_root/starship/starship.toml" "$HOME/.config/starship.toml"
 
 # 3. 目录：先 adopt 宿主已有内容，再 symlink 到仓库目录。
 adopt_and_link_dir "$repo_root/agents" "$HOME/.agents"
@@ -148,6 +149,7 @@ adopt_and_link_dir "$repo_root/claude" "$HOME/.claude"
 
 adopt_and_link_dir "$repo_root/ghostty" "$HOME/.config/ghostty"
 adopt_and_link_dir "$repo_root/yazi" "$HOME/.config/yazi"
+adopt_and_link_dir "$repo_root/neovim" "$HOME/.config/nvim"
 
 if [ "$created_backup_root" -eq 0 ]; then
   printf 'No backups created.\n'

@@ -17,6 +17,7 @@
 !/zsh/env.zsh
 !/zsh/aliases.zsh
 !/zsh/plugins.zsh
+!/zsh/fzf.zsh
 
 # Placeholder directory for future tmux fragments.
 !/tmux/
@@ -37,6 +38,15 @@
 !/yazi/yazi.toml
 !/yazi/keymap.toml
 !/yazi/theme.toml
+
+!/starship/
+
+!/INSTALL.md
+
+!/neovim/
+!/neovim/lua/
+!/neovim/lua/**
+
 !/cursor/
 /cursor/*
 !/cursor/mcp.json
