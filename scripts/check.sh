@@ -120,5 +120,7 @@ check_link "$repo_root/cursor/mcp.json" "$HOME/.cursor/mcp.json"
 check_dir_link "$repo_root/agents" "$HOME/.agents"
 check_dir_link "$repo_root/codex" "$HOME/.codex"
 check_dir_link "$repo_root/claude" "$HOME/.claude"
+check_dir_link "$repo_root/ghostty" "$HOME/.config/ghostty"
+check_dir_link "$repo_root/yazi" "$HOME/.config/yazi"
 
 exit "$status"

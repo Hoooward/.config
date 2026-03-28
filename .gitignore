@@ -28,6 +28,15 @@
 /claude/*
 !/claude/settings.json
 
+!/ghostty/
+/ghostty/*
+!/ghostty/config
+
+!/yazi/
+/yazi/*
+!/yazi/yazi.toml
+!/yazi/keymap.toml
+!/yazi/theme.toml
 !/cursor/
 /cursor/*
 !/cursor/mcp.json

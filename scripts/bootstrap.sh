@@ -146,6 +146,9 @@ adopt_and_link_dir "$repo_root/agents" "$HOME/.agents"
 adopt_and_link_dir "$repo_root/codex" "$HOME/.codex"
 adopt_and_link_dir "$repo_root/claude" "$HOME/.claude"
 
+adopt_and_link_dir "$repo_root/ghostty" "$HOME/.config/ghostty"
+adopt_and_link_dir "$repo_root/yazi" "$HOME/.config/yazi"
+
 if [ "$created_backup_root" -eq 0 ]; then
   printf 'No backups created.\n'
 else
