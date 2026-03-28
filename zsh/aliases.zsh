@@ -7,6 +7,8 @@ alias reloadzsh='source ~/.zshrc'
 alias tmuxconfig='vim ~/.tmux.conf'
 alias zshconfig='vim ~/.zshrc'
 alias vim='nvim'
+alias vi='nvim'
+alias yz='yazi'
 
 # 默认代理命令放在公共配置里。
 # 本机如果要改端口或协议，直接在宿主 ~/.zshrc 里重定义这些 alias 即可。
