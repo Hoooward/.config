@@ -1,5 +1,5 @@
 # Match Zed editor font.
-font-family = Lilex
+font-family = Lilex Nerd Font Mono
 # macOS fallback fonts (monospace + emoji)
 font-thicken = true
 font-thicken-strength = 32
