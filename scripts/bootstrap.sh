@@ -106,6 +106,7 @@ link_file "$repo_root/claude/settings.json" "$HOME/.claude/settings.json"
 link_file "$repo_root/cursor/mcp.json" "$HOME/.cursor/mcp.json"
 adopt_and_link_dir "$repo_root/agents" "$HOME/.agents"
 adopt_and_link_dir "$repo_root/codex" "$HOME/.codex"
+adopt_and_link_dir "$repo_root/claude" "$HOME/.claude"
 
 if [ "$created_backup_root" -eq 0 ]; then
   printf 'No backups created.\n'
