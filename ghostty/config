@@ -1,6 +1,6 @@
 # Match Zed editor font.
 font-family = Lilex Nerd Font Mono
-font-size = 16
+font-size = 14
 # 先看字体本身能不能吃到 Medium / Bold
 font-style = Medium
 font-style-bold = Bold
@@ -18,7 +18,7 @@ theme = TokyoNight
 
 # --- Window and Appearance ---
 background-opacity = 1
-macos-titlebar-style = transparent
+macos-titlebar-style = hidden
 window-padding-x = 14
 window-padding-y = 10
 window-save-state = never
