@@ -1,5 +1,8 @@
 # 安装列表
 
+https://github.com/jesseduffield/lazygit
+brew install lazygit
+
 https://neovim.io/doc/install/
 brew install neovim
 
