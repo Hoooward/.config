@@ -1,12 +1,20 @@
 # Match Zed editor font.
 font-family = Lilex Nerd Font Mono
-# macOS fallback fonts (monospace + emoji)
+font-size = 16
+# 先看字体本身能不能吃到 Medium / Bold
+font-style = Medium
+font-style-bold = Bold
+
+# macOS 可用
 font-thicken = true
 font-thicken-strength = 32
-adjust-cell-height = 2
+
+# 比默认略松，接近“舒服但不散”
+adjust-cell-height = 5
+adjust-cursor-height = 5
 
 # --- Theme and Colors ---
-theme = Kanagawa Wave
+theme = TokyoNight
 
 # --- Window and Appearance ---
 background-opacity = 1
