@@ -32,6 +32,8 @@
 !/ghostty/
 /ghostty/*
 !/ghostty/config
+!/ghostty/shaders
+!/ghostty/shaders/*
 
 !/yazi/
 !/yazi/plugins/
