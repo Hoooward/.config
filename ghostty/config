@@ -83,3 +83,6 @@ keybind = cmd+shift+comma=reload_config
 
 # --- Performance ---
 scrollback-limit = 25000000
+
+custom-shader = shaders/cursor_warp.glsl
+
