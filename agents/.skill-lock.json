@@ -457,6 +457,15 @@
       "skillFolderHash": "ac92229646fccf7315ae139c37b479b3790617f2",
       "installedAt": "2026-08-21T15:29:57.634Z",
       "updatedAt": "2026-08-21T15:29:57.634Z"
+    },
+    "herdr": {
+      "source": "herdrdev/herdr",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/herdrdev/herdr.git",
+      "skillPath": "skills/herdr/SKILL.md",
+      "skillFolderHash": "f8bb649bb92ddc99e6af463ab9a635da98c7b129",
+      "installedAt": "2026-08-21T16:09:30.710Z",
+      "updatedAt": "2026-08-21T16:09:30.710Z"
     }
   },
   "dismissed": {
