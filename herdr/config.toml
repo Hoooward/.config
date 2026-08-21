@@ -60,6 +60,7 @@ pane_gaps = false
 
 # Herdr 原生支持 workspace/tab/pane 编号从 1 开始，无需额外配置。
 
+show_agent_labels_on_pane_borders = false
 [advanced]
 # tmux history-limit 为 100000 行；Herdr 按字节限制，取 100 MB 作为近似容量。
 scrollback_limit_bytes = 100000000
