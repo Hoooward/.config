@@ -14,6 +14,9 @@ new_cwd = "follow"
 # 保持 tmux 的默认 prefix。
 prefix = "ctrl+b"
 
+# 兼容 tmux：分离客户端，但保持 Herdr server 和 Agent 在后台运行。
+detach = "prefix+d"
+
 # tmux: bind r source-file ~/.tmux.conf
 reload_config = "prefix+r"
 

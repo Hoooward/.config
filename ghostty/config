@@ -1,13 +1,13 @@
 # Match Zed editor font.
 font-family = Lilex Nerd Font Mono
+font-family = PingFang SC
 font-size = 14
 # 先看字体本身能不能吃到 Medium / Bold
 font-style = Medium
 font-style-bold = Bold
 
 # macOS 可用
-font-thicken = true
-font-thicken-strength = 32
+font-thicken = false
 
 # 比默认略松，接近“舒服但不散”
 adjust-cell-height = 5
@@ -85,4 +85,3 @@ keybind = cmd+shift+comma=reload_config
 scrollback-limit = 25000000
 
 custom-shader = shaders/cursor_warp.glsl
-
