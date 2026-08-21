@@ -90,6 +90,24 @@
       "skillFolderHash": "",
       "installedAt": "2026-03-08T13:06:22.087Z",
       "updatedAt": "2026-03-08T13:06:22.087Z"
+    },
+    "dotenv": {
+      "source": "motdotla/dotenv",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/motdotla/dotenv.git",
+      "skillPath": "skills/dotenv/SKILL.md",
+      "skillFolderHash": "538f7fed470b43664f4c70fc8e4ece77e82d1598",
+      "installedAt": "2026-04-23T05:18:52.710Z",
+      "updatedAt": "2026-04-23T05:18:52.710Z"
+    },
+    "moshi-best-practices": {
+      "source": "rjyo/moshi-skill",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/rjyo/moshi-skill.git",
+      "skillPath": "skills/moshi-best-practices/SKILL.md",
+      "skillFolderHash": "bb2fd01eeddd9c4fdeaa29bf765c00931aeeea9f",
+      "installedAt": "2026-04-25T01:11:53.223Z",
+      "updatedAt": "2026-04-25T01:11:53.223Z"
     }
   },
   "dismissed": {
@@ -97,14 +115,17 @@
   },
   "lastSelectedAgents": [
     "amp",
+    "antigravity",
     "cline",
     "codex",
     "cursor",
+    "deepagents",
+    "firebender",
     "gemini-cli",
     "github-copilot",
     "kimi-cli",
     "opencode",
-    "claude-code",
-    "openclaw"
+    "warp",
+    "claude-code"
   ]
 }
