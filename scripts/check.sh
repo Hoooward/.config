@@ -115,6 +115,7 @@ check_tmux_source_block "$HOME/.tmux.conf" ".tmux.conf"
 
 # 2. 单文件：校验 symlink。
 check_link "$repo_root/cursor/mcp.json" "$HOME/.cursor/mcp.json"
+check_link "$repo_root/herdr/config.toml" "$HOME/.config/herdr/config.toml"
 
 # 3. 仓库接管目录：校验 symlink。
 check_dir_link "$repo_root/agents" "$HOME/.agents"

@@ -41,6 +41,9 @@
 
 !/starship/
 
+!/herdr/
+!/herdr/config.toml
+
 !/INSTALL.md
 
 !/neovim/

@@ -1,0 +1,62 @@
+# Herdr 共享配置。
+# 这里承接根目录 .tmux.conf 中与终端工作区交互直接相关的偏好。
+
+[theme]
+# 使用终端默认颜色，让 pane 内容保持 terminal 原生配色。
+name = "terminal"
+
+[terminal]
+# 新 pane/tab/workspace 跟随当前 pane 的工作目录，对应 tmux 的 -c
+# "#{pane_current_path}" 行为。
+new_cwd = "follow"
+
+[keys]
+# 保持 tmux 的默认 prefix。
+prefix = "ctrl+b"
+
+# tmux: bind r source-file ~/.tmux.conf
+reload_config = "prefix+r"
+
+# 保持 tmux 原配置的实际布局：v 上下分 pane，h 左右分 pane。
+# Herdr 的 action 名称按分隔线方向命名，因此这里需要交叉绑定。
+split_horizontal = "prefix+v"
+split_vertical = "prefix+h"
+
+# tmux: bind x kill-pane
+close_pane = "prefix+x"
+
+# tmux: bind c new-window
+new_tab = "prefix+c"
+
+# tmux: bind k confirm-before kill-window
+close_tab = "prefix+k"
+
+# tmux pane navigation / vim-tmux-navigator 的直接导航键。
+focus_pane_left = "ctrl+h"
+focus_pane_down = "ctrl+j"
+focus_pane_up = "ctrl+k"
+focus_pane_right = "ctrl+l"
+
+# tmux: M-h/j/k/l resize-pane
+resize_pane_left = "alt+h"
+resize_pane_down = "alt+j"
+resize_pane_up = "alt+k"
+resize_pane_right = "alt+l"
+
+[ui]
+# tmux status bar 位于顶部；Herdr 的 tab bar 是最接近的对应物。
+tab_bar_position = "top"
+
+# tmux 开启 mouse；Herdr 默认开启，显式记录偏好便于迁移。
+mouse_capture = true
+
+# tmux pane border 使用单线分隔；保留边界但关闭额外间隙。
+pane_borders = true
+pane_outer_borders = false
+pane_gaps = false
+
+# Herdr 原生支持 workspace/tab/pane 编号从 1 开始，无需额外配置。
+
+[advanced]
+# tmux history-limit 为 100000 行；Herdr 按字节限制，取 100 MB 作为近似容量。
+scrollback_limit_bytes = 100000000

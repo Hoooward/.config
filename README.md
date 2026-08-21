@@ -9,6 +9,7 @@ Low-friction dotfiles repo for `agents` skills, `codex`, `cursor` AI assets, `cl
 - `agents/`: shared universal skills source of truth
 - `claude/`, `codex/`, `cursor/`: tracked app config and AI assets
 - `.zshrc`, `.zprofile`, `.zshenv`, `.tmux.conf`: repo-owned entry files
+- `herdr/config.toml`: shared Herdr workspace and keybinding configuration
 - `scripts/bootstrap.sh`: insert or update managed host blocks and create symlinks
 - `scripts/check.sh`: verify expected managed blocks and symlinks
 - `scripts/test_managed_block.sh`: shell unit tests for managed block behavior
@@ -70,6 +71,7 @@ The shared Codex config in this repo already contains a `chrome-devtools` MCP en
 - `~/.zshenv` (managed block that sources the repo copy)
 - `~/.tmux.conf` (managed block that sources the repo copy)
 - `~/.cursor/mcp.json`
+- `~/.config/herdr/config.toml`
 - `~/.agents` (symlinked to `agents/`, as a repo-managed working directory)
 - `~/.codex` (symlinked to `codex/`, as a repo-managed working directory)
 - `~/.claude` (symlinked to `claude/`, as a repo-managed working directory)
@@ -186,6 +188,7 @@ Keep machine-specific settings out of the repo.
 
 - `zsh` and `tmux`: local host entry files stay normal files and contain a managed block that sources the repo entrypoint
 - `cursor/mcp.json`: managed as a single-file symlink
+- `herdr/config.toml`: managed as a single-file symlink
 - `agents`, `codex`, `claude`: managed as repo-owned working directories via directory symlink
 - If the repo path changes, rerun `./scripts/bootstrap.sh` to rewrite the managed block paths
 
