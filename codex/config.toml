@@ -1,5 +1,5 @@
 notify = ["/Users/tychooo/Documents/Code/hzht/hzht-config/codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended"]
-model = "gpt-5.6-terra"
+model = "gpt-5.6-luna"
 model_reasoning_effort = "medium"
 
 [mcp_servers]
@@ -31,13 +31,9 @@ BROWSER_USE_CODEX_APP_VERSION = "26.818.31338"
 NODE_REPL_TRUSTED_SERVICES = '{"browser":"/Users/tychooo/.codex/plugins/cache/openai-bundled/browser/26.818.31338/scripts/browser-service.mjs","sky":"@oai/sky/service"}'
 CODEX_CLI_PATH = "/Applications/ChatGPT.app/Contents/Resources/codex"
 
-[mcp_servers.shadcn]
-type = "stdio"
-command = "npx"
-args = ["shadcn@latest", "mcp"]
-
 [desktop]
 followUpQueueMode = "queue"
+conversationDetailMode = "STEPS_PROSE"
 
 [marketplaces.openai-bundled]
 last_updated = "2026-08-21T12:42:48Z"
@@ -81,3 +77,29 @@ NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "9230e2bd8b24b7ac7a0ba6774c64bf0d78ec
 
 [projects."/Users/tychooo"]
 trust_level = "trusted"
+
+[projects."/Users/tychooo/Documents/Codex/2026-08-21/github-plugin-github-openai-curated-remote"]
+trust_level = "trusted"
+
+[projects."/Users/tychooo/Documents/Code/hzht/hzht-config"]
+trust_level = "trusted"
+
+[projects."/Users/tychooo/Documents/Codex/2026-08-21/realtime-voice-chat"]
+trust_level = "trusted"
+
+[projects."/Users/tychooo/Documents/Code/hzht/sourcecode/skills"]
+trust_level = "trusted"
+
+[hooks.state]
+
+[hooks.state."/Users/tychooo/.codex/hooks.json:pre_tool_use:0:0"]
+trusted_hash = "sha256:4a6c6d0e20d8145be3b86a20162a0d7f3215d8331bbea4a2ecde590542f3cc24"
+
+[hooks.state."/Users/tychooo/.codex/hooks.json:post_tool_use:0:0"]
+trusted_hash = "sha256:f3d4a1e0acd717cfa7831541352fe3e26ad86de09ff95712919a5ad7e8fd1810"
+
+[hooks.state."/Users/tychooo/.codex/hooks.json:session_start:0:0"]
+trusted_hash = "sha256:3f5be7542ad17412c217736cb495823dc74cc8ce86d424b5fd253851379d4572"
+
+[hooks.state."/Users/tychooo/.codex/hooks.json:stop:0:0"]
+trusted_hash = "sha256:c08da0ded0fa49113297133c6174608799bf20660474934cf5ad9d1c23b13718"
