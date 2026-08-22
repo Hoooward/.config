@@ -1,6 +1,12 @@
 notify = ["/Users/tychooo/Documents/Code/hzht/hzht-config/codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended"]
-model = "gpt-5.6-luna"
-model_reasoning_effort = "medium"
+model = "gpt-5.6-sol"
+model_reasoning_effort = "high"
+approval_policy = "on-request"
+approvals_reviewer = "user"
+sandbox_mode = "workspace-write"
+
+[sandbox_workspace_write]
+network_access = true
 
 [mcp_servers]
 
@@ -90,6 +96,9 @@ trust_level = "trusted"
 [projects."/Users/tychooo/Documents/Code/hzht/sourcecode/skills"]
 trust_level = "trusted"
 
+[projects."/Users/tychooo/Documents/Code/hzht/hzht-family"]
+trust_level = "trusted"
+
 [hooks.state]
 
 [hooks.state."/Users/tychooo/.codex/hooks.json:pre_tool_use:0:0"]
@@ -103,3 +112,7 @@ trusted_hash = "sha256:3f5be7542ad17412c217736cb495823dc74cc8ce86d424b5fd2538513
 
 [hooks.state."/Users/tychooo/.codex/hooks.json:stop:0:0"]
 trusted_hash = "sha256:c08da0ded0fa49113297133c6174608799bf20660474934cf5ad9d1c23b13718"
+
+[tui]
+status_line = ["model-with-reasoning", "git-branch", "context-used", "weekly-limit", "fast-mode"]
+status_line_use_colors = true

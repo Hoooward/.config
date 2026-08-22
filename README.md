@@ -14,6 +14,8 @@ Low-friction dotfiles repo for `agents` skills, `codex`, `cursor` AI assets, `cl
 - `scripts/check.sh`: verify expected managed blocks and symlinks
 - `scripts/test_managed_block.sh`: shell unit tests for managed block behavior
 
+`zsh/codex.zsh` 提供 `xlm` 启动器：执行 `xlm` 后通过 `fzf` 选择 Codex 的模型和推理深度，右侧预览显示最终命令及说明；权限配置沿用当前 Codex 默认值。可以继续传入任务参数，例如 `xlm "修复登录流程"`。
+
 ## Quick Start
 
 ```bash

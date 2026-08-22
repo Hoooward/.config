@@ -11,6 +11,6 @@ source "$HZHT_CONFIG_ROOT/zsh/env.zsh"
 source "$HZHT_CONFIG_ROOT/zsh/aliases.zsh"
 source "$HZHT_CONFIG_ROOT/zsh/plugins.zsh"
 source "$HZHT_CONFIG_ROOT/zsh/fzf.zsh"
+source "$HZHT_CONFIG_ROOT/zsh/codex.zsh"
 
 eval "$(starship init zsh)"
-
