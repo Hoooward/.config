@@ -43,6 +43,8 @@
 
 !/herdr/
 !/herdr/config.toml
+!/herdr/plugins/
+!/herdr/plugins/**
 
 !/INSTALL.md
 

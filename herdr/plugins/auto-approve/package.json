@@ -1,0 +1,12 @@
+{
+  "name": "@tychooo/herdr-auto-approve",
+  "version": "0.1.2",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

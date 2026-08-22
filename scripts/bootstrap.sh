@@ -131,6 +131,20 @@ ensure_tmux_source_block() {
   ensure_managed_block_file "$target_path" "$(build_tmux_source_block_body "$repo_file")"
 }
 
+# Herdr plugin 使用官方 registry link，而不是额外维护软链位置。
+# 重复 link 同一路径会刷新 manifest，适合 bootstrap 的幂等同步语义。
+link_herdr_plugin() {
+  local plugin_dir="$1"
+
+  if ! command -v herdr >/dev/null 2>&1; then
+    printf 'SKIP Herdr plugin %s (herdr not found)\n' "$plugin_dir"
+    return
+  fi
+
+  herdr plugin link "$plugin_dir" >/dev/null
+  printf 'Linked Herdr plugin %s\n' "$plugin_dir"
+}
+
 # 1. 入口文件：宿主保留，写入 managed block。
 ensure_shell_source_block "$HOME/.zshrc" ".zshrc"
 ensure_shell_source_block "$HOME/.zprofile" ".zprofile"
@@ -142,6 +156,7 @@ ensure_tmux_source_block "$HOME/.tmux.conf" ".tmux.conf"
 link_file "$repo_root/cursor/mcp.json" "$HOME/.cursor/mcp.json"
 link_file "$repo_root/starship/starship.toml" "$HOME/.config/starship.toml"
 link_file "$repo_root/herdr/config.toml" "$HOME/.config/herdr/config.toml"
+link_herdr_plugin "$repo_root/herdr/plugins/auto-approve"
 
 # 3. 目录：先 adopt 宿主已有内容，再 symlink 到仓库目录。
 adopt_and_link_dir "$repo_root/agents" "$HOME/.agents"

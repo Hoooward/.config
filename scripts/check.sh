@@ -100,6 +100,54 @@ check_tmux_source_block() {
   check_managed_block "$target_path" "$(build_tmux_source_block_body "$repo_file")"
 }
 
+# Herdr registry 中的 local plugin 必须启用，并且指回当前仓库路径。
+check_herdr_plugin() {
+  local plugin_id="$1"
+  local plugin_dir="$2"
+  local response
+
+  if ! command -v herdr >/dev/null 2>&1; then
+    printf 'MISSING COMMAND herdr\n'
+    status=1
+    return
+  fi
+
+  if ! response="$(herdr plugin list --plugin "$plugin_id" --json)"; then
+    printf 'DIFF Herdr plugin %s\n' "$plugin_id"
+    status=1
+    return
+  fi
+
+  if printf '%s' "$response" | node -e '
+    const path = require("node:path");
+    let input = "";
+    process.stdin.setEncoding("utf8");
+    process.stdin.on("data", (chunk) => { input += chunk; });
+    process.stdin.on("end", () => {
+      const expectedId = process.argv[1];
+      const expectedPath = path.resolve(process.argv[2]);
+      const parsed = JSON.parse(input);
+      const plugin = parsed.result?.plugins?.[0];
+      const sourcePath = plugin?.plugin_root;
+      process.exit(
+        plugin?.plugin_id === expectedId &&
+        plugin?.enabled === true &&
+        plugin?.source?.kind === "local" &&
+        sourcePath &&
+        path.resolve(sourcePath) === expectedPath
+          ? 0
+          : 1,
+      );
+    });
+  ' "$plugin_id" "$plugin_dir"; then
+    printf 'OK Herdr plugin %s\n' "$plugin_id"
+    return
+  fi
+
+  printf 'DIFF Herdr plugin %s\n' "$plugin_id"
+  status=1
+}
+
 if [ -d "$repo_root/references/theniceboy-config" ]; then
   printf 'OK %s\n' "$repo_root/references/theniceboy-config"
 else
@@ -116,6 +164,7 @@ check_tmux_source_block "$HOME/.tmux.conf" ".tmux.conf"
 # 2. 单文件：校验 symlink。
 check_link "$repo_root/cursor/mcp.json" "$HOME/.cursor/mcp.json"
 check_link "$repo_root/herdr/config.toml" "$HOME/.config/herdr/config.toml"
+check_herdr_plugin "tychooo.auto-approve" "$repo_root/herdr/plugins/auto-approve"
 
 # 3. 仓库接管目录：校验 symlink。
 check_dir_link "$repo_root/agents" "$HOME/.agents"

@@ -1,0 +1,45 @@
+id = "tychooo.auto-approve"
+name = "Auto Approve"
+version = "0.1.2"
+min_herdr_version = "0.8.2"
+description = "Safely auto-approve explicit Codex and Claude Code permission prompts"
+platforms = ["linux", "macos", "windows"]
+
+[[startup]]
+command = ["node", "src/main.mjs", "startup"]
+
+[[actions]]
+id = "toggle-pane"
+title = "Toggle auto-approve for pane"
+description = "Toggle the effective auto-approve policy for the focused pane"
+contexts = ["pane"]
+command = ["node", "src/main.mjs", "action"]
+
+[[actions]]
+id = "toggle-all"
+title = "Toggle auto-approve globally"
+description = "Toggle all current and future Codex and Claude Code panes"
+contexts = ["global"]
+command = ["node", "src/main.mjs", "action"]
+
+[[actions]]
+id = "disable-all"
+title = "Disable auto-approve everywhere"
+description = "Emergency stop that clears global and per-pane policies"
+contexts = ["global"]
+command = ["node", "src/main.mjs", "action"]
+
+[[actions]]
+id = "status"
+title = "Show auto-approve status"
+description = "Show global and per-pane auto-approve status"
+contexts = ["global", "workspace", "tab", "pane"]
+command = ["node", "src/main.mjs", "action"]
+
+[[events]]
+on = "pane.agent_status_changed"
+command = ["node", "src/main.mjs", "event"]
+
+[[events]]
+on = "pane.agent_detected"
+command = ["node", "src/main.mjs", "event"]
